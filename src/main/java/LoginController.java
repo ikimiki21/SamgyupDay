@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.io.IOException;
 
 public class LoginController {
     @FXML private TextField usernameField;
@@ -35,7 +36,15 @@ public class LoginController {
         String user = usernameField.getText().trim();
         String role = roleComboBox.getValue();
         
-        System.out.println("User authenticated: " + user + " as " + role);
+        // Password is intentionally not saved
+        try {
+            FormUtils.appendCsv("login_log.csv",
+                    new String[] {"username", "role", "remember_terminal"},
+                    user, role, rememberMeCheckBox.isSelected());
+        } catch (IOException e) {
+            showError("Could not save login record: " + e.getMessage());
+            return;
+        }
         errorLabel.setStyle("-fx-text-fill: green;");
         errorLabel.setText("Login successful! Redirecting to dashboard...");
     }

@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class StockInController {
@@ -27,6 +28,8 @@ public class StockInController {
         conditionalRadio.setToggleGroup(qualityGroup);
         
         deliveryDatePicker.setValue(LocalDate.now());
+
+        FormUtils.tabMovesFocus(notesArea);
     }
 
     @FXML
@@ -63,7 +66,18 @@ public class StockInController {
         }
 
         // Simulate UI Data Handling
-        System.out.println("Batch saved: " + weight + " kg of " + itemCutCombo.getValue());
+        try {
+            FormUtils.appendCsv("stockin.csv",
+                    new String[] {"supplier", "invoice", "meat_type", "cut", "weight_kg",
+                            "delivery_date", "expiration_date", "quality", "notes"},
+                    supplierField.getText().trim(), invoiceField.getText().trim(),
+                    meatTypeCombo.getValue(), itemCutCombo.getValue(), weight,
+                    deliveryDatePicker.getValue(), expirationDatePicker.getValue(),
+                    passedRadio.isSelected() ? "Passed" : "Conditional", notesArea.getText());
+        } catch (IOException e) {
+            showError("Could not save stock-in batch: " + e.getMessage());
+            return;
+        }
         errorLabel.setStyle("-fx-text-fill: green;");
         errorLabel.setText("Stock-in batch logged successfully!");
     }

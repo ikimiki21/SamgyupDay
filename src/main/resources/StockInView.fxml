@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StockInController" prefWidth="500.0" prefHeight="620.0">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <!-- Defined first so its Label can reference it with labelFor; placed below with fx:reference. -->
+    <fx:define>
+        <TextArea fx:id="notesArea" promptText="Optional comments regarding batch quality or scale discrepancies..." prefHeight="70.0" />
+    </fx:define>
+
+    <Label text="Inventory Stock-In Batch Entry" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <!-- In the grid each input is declared before its Label so labelFor can reference it.
+         Grid position is set by rowIndex/columnIndex; Tab follows the inputs' order (top to bottom). -->
+    <GridPane hgap="10" vgap="10">
+        <!-- Control 1: Supplier Name -->
+        <TextField fx:id="supplierField" promptText="e.g., Monterey Meat Corp" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Label text="Supplier Name:" labelFor="$supplierField" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+
+        <!-- Control 2: Invoice / Delivery Number -->
+        <TextField fx:id="invoiceField" promptText="e.g., DR-2026-8891" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Label text="Invoice / DR #:" labelFor="$invoiceField" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+
+        <!-- Control 3: Dropdown Meat Category -->
+        <ComboBox fx:id="meatTypeCombo" promptText="Select type" prefWidth="250.0" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Label text="Meat Type:" labelFor="$meatTypeCombo" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+
+        <!-- Control 4: Dropdown Item Cut -->
+        <ComboBox fx:id="itemCutCombo" promptText="Select cut" prefWidth="250.0" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        <Label text="Cut Category:" labelFor="$itemCutCombo" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+
+        <!-- Control 5: Weight in Kg -->
+        <TextField fx:id="weightField" promptText="e.g., 25.50" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        <Label text="Quantity Weight (kg):" labelFor="$weightField" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+
+        <!-- Control 6: Delivery Date -->
+        <DatePicker fx:id="deliveryDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+        <Label text="Delivery Date:" labelFor="$deliveryDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+
+        <!-- Control 7: Expiration Date -->
+        <DatePicker fx:id="expirationDatePicker" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+        <Label text="Batch Expiration Date:" labelFor="$expirationDatePicker" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+
+        <!-- Control 8: Quality Radio Buttons -->
+        <HBox spacing="10" GridPane.rowIndex="7" GridPane.columnIndex="1">
+            <RadioButton fx:id="passedRadio" text="Passed" selected="true" />
+            <RadioButton fx:id="conditionalRadio" text="Conditional" />
+        </HBox>
+        <Label text="Quality Status:" labelFor="$passedRadio" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+    </GridPane>
+
+    <!-- Control 9: Text Area -->
+    <Label text="Receiving Notes / Discrepancies:" labelFor="$notesArea" />
+    <fx:reference source="notesArea" />
+
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+
+    <!-- Control 10: Buttons -->
+    <HBox spacing="15.0" alignment="CENTER_RIGHT">
+        <Button text="Clear Form" onAction="#handleClear" />
+        <Button text="Save Stock-In Batch" onAction="#handleSaveStockIn" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+    </HBox>
+</VBox>

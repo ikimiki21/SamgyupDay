@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.io.IOException;
 
 public class CheckInController {
     @FXML private ComboBox<String> tableCombo;
@@ -10,6 +11,7 @@ public class CheckInController {
     @FXML private CheckBox childCheckBox;
     @FXML private TextField childHeadcountField;
     @FXML private ToggleButton timerToggle;
+    @FXML private TextField cashierIdField;
     @FXML private TextArea tableNotesArea;
     @FXML private Label errorLabel;
 
@@ -25,6 +27,8 @@ public class CheckInController {
         tier299.setToggleGroup(tierGroup);
         tier399.setToggleGroup(tierGroup);
         tier499.setToggleGroup(tierGroup);
+
+        FormUtils.tabMovesFocus(tableNotesArea);
     }
 
     @FXML
@@ -59,9 +63,10 @@ public class CheckInController {
         }
         
         // Validation 3: Child Headcount Checks
+        int childHeadcount = 0;
         if (childCheckBox.isSelected()) {
             try {
-                int childHeadcount = Integer.parseInt(childHeadcountField.getText().trim());
+                childHeadcount = Integer.parseInt(childHeadcountField.getText().trim());
                 if (childHeadcount < 1 || childHeadcount >= totalHeadcount) {
                     showError("Child headcount must be at least 1 and less than total guests.");
                     return;
@@ -73,7 +78,18 @@ public class CheckInController {
         }
 
         // Simulate UI Data Handling
-        System.out.println(tableCombo.getValue() + " activated with " + totalHeadcount + " guests.");
+        RadioButton tier = (RadioButton) tierGroup.getSelectedToggle();
+        try {
+            FormUtils.appendCsv("checkin.csv",
+                    new String[] {"table", "headcount", "tier", "child_rate", "child_headcount",
+                            "timer_started", "cashier_id", "notes"},
+                    tableCombo.getValue(), totalHeadcount, tier == null ? "" : tier.getText(),
+                    childCheckBox.isSelected(), childHeadcount, timerToggle.isSelected(),
+                    cashierIdField.getText(), tableNotesArea.getText());
+        } catch (IOException e) {
+            showError("Could not save check-in record: " + e.getMessage());
+            return;
+        }
         errorLabel.setStyle("-fx-text-fill: green;");
         errorLabel.setText("Check-in confirmed! Timer and table active.");
     }

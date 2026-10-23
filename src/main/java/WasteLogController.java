@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.io.IOException;
 
 public class WasteLogController {
     @FXML private ComboBox<String> sourceCombo;
@@ -15,6 +16,8 @@ public class WasteLogController {
     public void initialize() {
         sourceCombo.getItems().addAll("Table 1", "Table 3", "Table 7", "Kitchen Preparation Area", "Cold Storage Spoilage");
         reasonCombo.getItems().addAll("Customer Table Leftover", "Kitchen Prep Trim", "Expired Batch Spoilage", "Dropped Meat");
+
+        FormUtils.tabMovesFocus(explanationArea);
     }
 
     @FXML
@@ -32,8 +35,9 @@ public class WasteLogController {
         }
         
         // Validation 2: Weight Validation
+        int grams;
         try {
-            int grams = Integer.parseInt(wasteWeightField.getText().trim());
+            grams = Integer.parseInt(wasteWeightField.getText().trim());
             if (grams <= 0 || grams > 10000) {
                 showError("Waste weight must be between 1g and 10,000g.");
                 return;
@@ -50,7 +54,16 @@ public class WasteLogController {
         }
 
         // Simulate UI Data Handling
-        System.out.println("Waste record logged with dual confirmation PIN.");
+        // Supervisor PIN is intentionally not saved
+        try {
+            FormUtils.appendCsv("waste.csv",
+                    new String[] {"source", "reason", "weight_g", "staff_id", "fine_applied", "explanation"},
+                    sourceCombo.getValue(), reasonCombo.getValue(), grams,
+                    staffIdField.getText().trim(), fineCheckBox.isSelected(), explanationArea.getText());
+        } catch (IOException e) {
+            showError("Could not save waste record: " + e.getMessage());
+            return;
+        }
         errorLabel.setStyle("-fx-text-fill: green;");
         errorLabel.setText("Waste record successfully saved!");
     }

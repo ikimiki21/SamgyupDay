@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WasteLogController" prefWidth="450.0" prefHeight="540.0">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    
+    <Label text="Leftover &amp; Meat Waste Log" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    
+    <GridPane hgap="10" vgap="10">
+        <!-- Control 1: Origin -->
+        <Label text="Source / Table Reference:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <ComboBox fx:id="sourceCombo" promptText="Select Source" prefWidth="220.0" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <!-- Control 2: Waste Reason -->
+        <Label text="Waste Reason:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <ComboBox fx:id="reasonCombo" promptText="Select Reason" prefWidth="220.0" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <!-- Control 3: Waste Weight (Grams) -->
+        <Label text="Waste Weight (grams):" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="wasteWeightField" promptText="e.g., 250" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        
+        <!-- Control 4: Staff ID -->
+        <Label text="Kitchen Staff ID:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <TextField fx:id="staffIdField" promptText="e.g., KIT-102" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        
+        <!-- Control 5: Dual Sign-off Password Field -->
+        <Label text="Team Leader PIN Auth:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <PasswordField fx:id="supervisorPinField" promptText="Enter Supervisor PIN" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        
+        <!-- Control 6: Customer Fine Checkbox -->
+        <Label text="Leftover Fine Charge:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <CheckBox fx:id="fineCheckBox" text="Apply ₱200 Leftover Fee" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <!-- Control 7: Justification Notes -->
+    <Label text="Supervisor Justification / Explanation:" />
+    <TextArea fx:id="explanationArea" promptText="Explain reason for disposal or table penalty..." prefHeight="65.0" />
+    
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+    
+    <!-- Control 8: Submit Button -->
+    <Button text="Log Dual-Confirmed Waste Record" onAction="#handleLogWaste" prefWidth="410.0" style="-fx-background-color: #c0392b; -fx-text-fill: white;" />
+</VBox>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CheckInController" prefWidth="480.0" prefHeight="580.0">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    
+    <Label text="Customer Table Check-In &amp; Seating" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    
+    <GridPane hgap="10" vgap="12">
+        <!-- Control 1: Table Selection -->
+        <Label text="Select Table Number:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <ComboBox fx:id="tableCombo" promptText="Choose Table" prefWidth="200.0" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <!-- Control 2: Total Headcount -->
+        <Label text="Total Guest Headcount:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="headcountField" promptText="e.g., 4" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <!-- Control 3: Dining Tier Selection -->
+        <Label text="Package Tier:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <VBox spacing="5" GridPane.rowIndex="2" GridPane.columnIndex="1">
+            <RadioButton fx:id="tier299" text="₱299 Basic Pork Tier" />
+            <RadioButton fx:id="tier399" text="₱399 Standard Combo Tier" selected="true" />
+            <RadioButton fx:id="tier499" text="₱499 Premium Unlimited Tier" />
+        </VBox>
+        
+        <!-- Control 4: Checkbox Child Rate -->
+        <Label text="Special Headcount:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <CheckBox fx:id="childCheckBox" text="Include Child Discount Rate" onAction="#handleChildToggle" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        
+        <!-- Control 5: Child Headcount Input -->
+        <Label text="Child Headcount:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="childHeadcountField" promptText="0" disable="true" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        
+        <!-- Control 6: Toggle Switch 2-Hr Timer -->
+        <Label text="2-Hour Timer Control:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <ToggleButton fx:id="timerToggle" text="Start 2-Hour Timer Automatically" selected="true" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+        
+        <!-- Control 7: Server ID -->
+        <Label text="Assigned Cashier ID:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+        <TextField fx:id="cashierIdField" text="CSH-004" disable="true" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <!-- Control 8: Text Area Special Requests -->
+    <Label text="Special Table Requests / Notes:" />
+    <TextArea fx:id="tableNotesArea" promptText="e.g., Extra high chair needed, table grill pre-heated" prefHeight="60.0" />
+    
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+    
+    <!-- Control 9: Submit Button -->
+    <Button text="Confirm Table Check-In" onAction="#handleCheckIn" prefWidth="440.0" style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+</VBox>

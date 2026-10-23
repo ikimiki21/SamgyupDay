@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StockInController" prefWidth="500.0" prefHeight="620.0">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    
+    <Label text="Inventory Stock-In Batch Entry" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    
+    <GridPane hgap="10" vgap="10">
+        <!-- Control 1: Supplier Name -->
+        <Label text="Supplier Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="supplierField" promptText="e.g., Monterey Meat Corp" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <!-- Control 2: Invoice / Delivery Number -->
+        <Label text="Invoice / DR #:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="invoiceField" promptText="e.g., DR-2026-8891" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <!-- Control 3: Dropdown Meat Category -->
+        <Label text="Meat Type:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <ComboBox fx:id="meatTypeCombo" promptText="Select type" prefWidth="250.0" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        
+        <!-- Control 4: Dropdown Item Cut -->
+        <Label text="Cut Category:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <ComboBox fx:id="itemCutCombo" promptText="Select cut" prefWidth="250.0" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        
+        <!-- Control 5: Weight in Kg -->
+        <Label text="Quantity Weight (kg):" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="weightField" promptText="e.g., 25.50" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        
+        <!-- Control 6: Delivery Date -->
+        <Label text="Delivery Date:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <DatePicker fx:id="deliveryDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+        
+        <!-- Control 7: Expiration Date -->
+        <Label text="Batch Expiration Date:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+        <DatePicker fx:id="expirationDatePicker" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+        
+        <!-- Control 8: Quality Radio Buttons -->
+        <Label text="Quality Status:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+        <HBox spacing="10" GridPane.rowIndex="7" GridPane.columnIndex="1">
+            <RadioButton fx:id="passedRadio" text="Passed" selected="true" />
+            <RadioButton fx:id="conditionalRadio" text="Conditional" />
+        </HBox>
+    </GridPane>
+    
+    <!-- Control 9: Text Area -->
+    <Label text="Receiving Notes / Discrepancies:" />
+    <TextArea fx:id="notesArea" promptText="Optional comments regarding batch quality or scale discrepancies..." prefHeight="70.0" />
+    
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+    
+    <!-- Control 10: Buttons -->
+    <HBox spacing="15.0" alignment="CENTER_RIGHT">
+        <Button text="Clear Form" onAction="#handleClear" />
+        <Button text="Save Stock-In Batch" onAction="#handleSaveStockIn" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+    </HBox>
+</VBox>
